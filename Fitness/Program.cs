@@ -1,3 +1,6 @@
+using Fitness.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Fitness;
 
 public class Program
@@ -6,9 +9,14 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var connectionString = builder.Configuration["Fitness:ConnectionString"];
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
+        builder.Services.AddDbContext<AppDb>(options =>
+        {
+            options.UseNpgsql(connectionString);
+        });
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
