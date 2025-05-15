@@ -1,5 +1,6 @@
 using Fitness.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Fitness;
 
@@ -17,6 +18,15 @@ public class Program
         {
             options.UseSqlServer(connectionString);
         });
+
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.SlidingExpiration = true;
+                options.AccessDeniedPath = "/Forbidden/";
+            });
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -32,6 +42,7 @@ public class Program
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
