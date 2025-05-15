@@ -4,3 +4,7 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 .idea/
+/Backup
+UpgradeLog.htm
+.vs/
+Fitness/Fitness.csproj.user

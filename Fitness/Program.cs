@@ -15,7 +15,7 @@ public class Program
 
         builder.Services.AddDbContext<AppDb>(options =>
         {
-            options.UseNpgsql(connectionString);
+            options.UseSqlServer(connectionString);
         });
         var app = builder.Build();
 
